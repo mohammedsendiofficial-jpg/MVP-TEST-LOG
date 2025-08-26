@@ -471,6 +471,34 @@
 
       const root = ReactDOM.createRoot(document.getElementById("root"));
       root.render(<App />);
+      // Auto-complete registration and set aircraft type
+document.getElementById("registration").addEventListener("input", function () {
+  let input = this.value.trim().toUpperCase();
+
+  if (input === "") {
+    document.getElementById("aircraftType").value = "";
+    return;
+  }
+
+  // Always prefix with HZ-AS
+  let fullReg = "HZ-AS" + input;
+  this.value = fullReg;
+
+  // Determine aircraft type
+  if (/^[0-9]+$/.test(input.slice(-1))) {
+    // Ends with number
+    document.getElementById("aircraftType").value = "A320";
+  } else if (/^[A-Z]{2}$/.test(input.slice(-2))) {
+    // Ends with two letters
+    document.getElementById("aircraftType").value = "A321 NEO";
+  } else if (/^[A-Z]$/.test(input.slice(-1))) {
+    // Ends with single letter
+    document.getElementById("aircraftType").value = "A321";
+  } else {
+    document.getElementById("aircraftType").value = "";
+  }
+});
+
     </script>
   </body>
 </html>
